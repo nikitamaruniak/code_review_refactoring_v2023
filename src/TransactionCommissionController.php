@@ -3,13 +3,22 @@
 namespace App;
 
 use App\Exception\InputDataValidationException;
-use App\ValueObject\InputDataVO;
+use App\ValueObject\Input;
+use App\ValueObject\TransactionData;
 
 class TransactionCommissionController
 {
-    public static function run(string $inputData): void
+    public static function run(Input $input): void
     {
-        foreach (explode("\n", file_get_contents($inputData)) as $row) {
+        $inputFileName = $input->getInputFileName();
+
+        if (null === $inputFileName) {
+            echo "Please provide file with input data.\n";
+
+            return;
+        }
+
+        foreach (explode("\n", file_get_contents($inputFileName)) as $row) {
             $row = trim($row);
 
             if (empty($row)) {
@@ -17,8 +26,8 @@ class TransactionCommissionController
             }
 
             try {
-                $inputData = InputDataVO::createFromString($row);
-//                var_dump($inputData);
+                $transactionData = TransactionData::createFromString($row);
+                var_dump($transactionData);
             } catch (InputDataValidationException $exception) {
                 // TODO: log
                 throw $exception;

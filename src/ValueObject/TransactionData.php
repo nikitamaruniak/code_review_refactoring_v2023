@@ -4,7 +4,7 @@ namespace App\ValueObject;
 
 use App\Exception\InputDataValidationException;
 
-class InputDataVO
+class TransactionData
 {
     public function __construct(
         private readonly int $bin,
