@@ -11,7 +11,7 @@ use Symfony\Contracts\Cache\ItemInterface;
 class ExchangeRateCachedRepository implements ExchangeRateRepositoryInterface
 {
     private const CACHE_KEY = 'rates';
-    private const CACHE_TTL = 3600;
+    private const CACHE_TTL = 60 * 60;
 
     private readonly FilesystemAdapter $cache;
 

@@ -2,6 +2,7 @@
 
 namespace App\Presentation\Controller;
 
+use App\BinList\BinListService;
 use App\ExchangeRate\ExchangeRateService;
 use App\Presentation\ValueObject\Input;
 use App\Presentation\ValueObject\TransactionData;
@@ -9,8 +10,9 @@ use Throwable;
 
 class TransactionCommissionController
 {
-    public function __construct(private readonly ExchangeRateService $exchangeRateService)
-    {
+    public function __construct(
+        private readonly ExchangeRateService $exchangeRateService,
+    ) {
     }
 
     public function run(Input $input): void
@@ -34,9 +36,12 @@ class TransactionCommissionController
                 $transactionData = TransactionData::createFromString($row);
                 $rate = $this->exchangeRateService->getEurRateByCurrency($transactionData->getCurrency());
                 $amountEur = $transactionData->getAmount() / $rate;
-                var_dump('rate ' . $rate);
-                var_dump('getAmount ' . $transactionData->getAmount());
-                var_dump('amountEur ' . $amountEur);
+
+                // calculate commission
+
+                var_dump('rate: ' . $rate);
+                var_dump('getAmount: ' . $transactionData->getAmount());
+                var_dump('amountEur: ' . $amountEur);
 //                var_dump($transactionData);
             } catch (Throwable $exception) {
                 // TODO: log
@@ -44,14 +49,6 @@ class TransactionCommissionController
 
                 continue;
             }
-
-            // get $amount in EUR
-            $rate = $this->exchangeRateService->getEurRateByCurrency($transactionData->getCurrency());
-
-            var_dump('rate' . $rate);
-//            $amountEur = $transactionData->getAmount() / $this->exchangeRateService->getEurRateByCurrency($transactionData->getCurrency());
-
-            // calculate commission
         }
     }
 }
