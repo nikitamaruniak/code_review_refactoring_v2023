@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exception;
+namespace App\TransactionCommission\Exception;
 
 use Exception;
 

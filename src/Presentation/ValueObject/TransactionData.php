@@ -1,8 +1,8 @@
 <?php
 
-namespace App\ValueObject;
+namespace App\Presentation\ValueObject;
 
-use App\Exception\InputDataValidationException;
+use App\TransactionCommission\Exception\InputDataValidationException;
 
 class TransactionData
 {

@@ -1,10 +1,18 @@
 <?php
 
-use App\TransactionCommissionController;
-use App\ValueObject\Input;
+use App\Presentation\Controller\TransactionCommissionController;
+use App\Presentation\ValueObject\Input;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 require __DIR__ . '/vendor/autoload.php';
 
-TransactionCommissionController::run(
-    Input::createFromArgv($argv)
-);
+$container = new ContainerBuilder();
+$loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/config'));
+$loader->load('services.yaml');
+$container->compile();
+
+$controller = $container->get(TransactionCommissionController::class);
+$controller->run(Input::createFromArgv($argv));
+

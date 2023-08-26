@@ -1,14 +1,19 @@
 <?php
 
-namespace App;
+namespace App\Presentation\Controller;
 
-use App\Exception\InputDataValidationException;
-use App\ValueObject\Input;
-use App\ValueObject\TransactionData;
+use App\ExchangeRate\ExchangeRateService;
+use App\Presentation\ValueObject\Input;
+use App\Presentation\ValueObject\TransactionData;
+use App\TransactionCommission\Exception\InputDataValidationException;
 
 class TransactionCommissionController
 {
-    public static function run(Input $input): void
+    public function __construct(private readonly ExchangeRateService $exchangeRateService)
+    {
+    }
+
+    public function run(Input $input): void
     {
         $inputFileName = $input->getInputFileName();
 
@@ -34,6 +39,7 @@ class TransactionCommissionController
             }
 
             // get $amount in EUR
+//            $amountEur = $transactionData->getAmount() / $this->exchangeRateService->getEurRateByCurrency($transactionData->getCurrency());
 
             // calculate commission
         }
