@@ -5,7 +5,7 @@ namespace App\Presentation\Controller;
 use App\ExchangeRate\ExchangeRateService;
 use App\Presentation\ValueObject\Input;
 use App\Presentation\ValueObject\TransactionData;
-use App\TransactionCommission\Exception\InputDataValidationException;
+use Throwable;
 
 class TransactionCommissionController
 {
@@ -32,13 +32,23 @@ class TransactionCommissionController
 
             try {
                 $transactionData = TransactionData::createFromString($row);
-                var_dump($transactionData);
-            } catch (InputDataValidationException $exception) {
+                $rate = $this->exchangeRateService->getEurRateByCurrency($transactionData->getCurrency());
+                $amountEur = $transactionData->getAmount() / $rate;
+                var_dump('rate ' . $rate);
+                var_dump('getAmount ' . $transactionData->getAmount());
+                var_dump('amountEur ' . $amountEur);
+//                var_dump($transactionData);
+            } catch (Throwable $exception) {
                 // TODO: log
                 throw $exception;
+
+                continue;
             }
 
             // get $amount in EUR
+            $rate = $this->exchangeRateService->getEurRateByCurrency($transactionData->getCurrency());
+
+            var_dump('rate' . $rate);
 //            $amountEur = $transactionData->getAmount() / $this->exchangeRateService->getEurRateByCurrency($transactionData->getCurrency());
 
             // calculate commission
