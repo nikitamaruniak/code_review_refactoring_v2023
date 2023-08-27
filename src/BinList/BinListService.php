@@ -3,6 +3,8 @@
 namespace App\BinList;
 
 use App\BinList\Repository\BinListRepositoryInterface;
+use App\BinList\ValueObject\BinLookUp;
+use App\Common\ValueObject\Bin;
 
 class BinListService
 {
@@ -10,7 +12,7 @@ class BinListService
     {
     }
 
-    public function getBinLookUp(int $bin)
+    public function getBinLookUp(Bin $bin): BinLookUp
     {
         return $this->repository->getBinLookUp($bin);
     }

@@ -1,6 +1,6 @@
 <?php
 
-$rates = json_decode(file_get_contents('http://api.exchangeratesapi.io/latest?access_key=082f5bc4ea088232d29c613e0aa2b6ee'), true);
+$rates = @json_decode(file_get_contents('http://api.exchangeratesapi.io/latest?access_key=082f5bc4ea088232d29c613e0aa2b6ee'), true);
 
 foreach (explode("\n", file_get_contents($argv[1])) as $row) {
 

@@ -2,16 +2,17 @@
 
 namespace App\Presentation\Controller;
 
-use App\BinList\BinListService;
-use App\ExchangeRate\ExchangeRateService;
+use App\Common\Output\OutputInterface;
+use App\Common\ValueObject\TransactionData;
 use App\Presentation\ValueObject\Input;
-use App\Presentation\ValueObject\TransactionData;
+use App\TransactionCommission\TransactionCommissionService;
 use Throwable;
 
-class TransactionCommissionController
+readonly class TransactionCommissionController
 {
     public function __construct(
-        private readonly ExchangeRateService $exchangeRateService,
+        private readonly TransactionCommissionService $transactionCommissionService,
+        private readonly OutputInterface $output,
     ) {
     }
 
@@ -33,16 +34,11 @@ class TransactionCommissionController
             }
 
             try {
-                $transactionData = TransactionData::createFromString($row);
-                $rate = $this->exchangeRateService->getEurRateByCurrency($transactionData->getCurrency());
-                $amountEur = $transactionData->getAmount() / $rate;
+                $commission = $this->transactionCommissionService->calculateCommission(
+                    TransactionData::createFromString($row)
+                );
 
-                // calculate commission
-
-                var_dump('rate: ' . $rate);
-                var_dump('getAmount: ' . $transactionData->getAmount());
-                var_dump('amountEur: ' . $amountEur);
-//                var_dump($transactionData);
+                $this->output->echo($commission);
             } catch (Throwable $exception) {
                 // TODO: log
                 throw $exception;

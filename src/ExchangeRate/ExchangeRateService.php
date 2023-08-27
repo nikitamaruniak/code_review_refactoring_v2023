@@ -2,8 +2,10 @@
 
 namespace App\ExchangeRate;
 
+use App\Common\ValueObject\Currency;
 use App\ExchangeRate\Repository\ExchangeRateRepositoryInterface;
 use App\ExchangeRate\Exeption\ExchangeRateRepositoryException;
+use App\ExchangeRate\ValueObject\ExchangeRate;
 
 readonly class ExchangeRateService
 {
@@ -14,8 +16,8 @@ readonly class ExchangeRateService
     /**
      * @throws ExchangeRateRepositoryException
      */
-    public function getEurRateByCurrency(string $currency): string
+    public function getByCurrency(Currency $currency, Currency $baseCurrency): ExchangeRate
     {
-        return $this->repository->getEurRateByCurrency($currency);
+        return $this->repository->getByCurrency($currency, $baseCurrency);
     }
 }
