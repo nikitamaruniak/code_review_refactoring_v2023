@@ -46,6 +46,7 @@ class ExchangeRateCachedRepository implements ExchangeRateRepositoryInterface
             });
 
         } catch (InvalidArgumentException $exception) {
+            # CR: Fail Fast: InvalidArgumentException схоже на помилку програміста тому нема сенсу його очікувати.
             throw new ExchangeRateRepositoryException(sprintf('Cache failed. Reason: \'%s\'', $exception->getMessage()));
         }
     }

@@ -2,6 +2,7 @@
     "name": "andriinavrotskii/refactoring_v2023",
     "description": "Test task refactoring",
     "require-dev": {
+        # CR: phpunit підключено але я не бачу тестів. Як виконувався рефакторінг без тестів? Тести є умовою для виконання задачі. 
         "phpunit/phpunit": "^10.3"
     },
     "autoload": {

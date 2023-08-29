@@ -14,6 +14,7 @@ class BinListService
 
     public function getBinLookUp(Bin $bin): BinLookUp
     {
+        # CR: YAGNI: Визначення BinListService повністю повторює визначення BinListRepositoryInterface то ж перший можна видалити.
         return $this->repository->getBinLookUp($bin);
     }
 }

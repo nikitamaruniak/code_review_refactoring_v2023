@@ -26,6 +26,7 @@ readonly class TransactionCommissionController
             return;
         }
 
+        # CR: SRP: Відповідальність за парсинг вхідного файлу можна передати новому об'єкту, наприклад `InputFile`.
         foreach (explode("\n", file_get_contents($inputFileName)) as $row) {
             $row = trim($row);
 
@@ -40,6 +41,8 @@ readonly class TransactionCommissionController
 
                 $this->output->echo($commission);
             } catch (Throwable $exception) {
+                # CR: SRP: Обробник необроблених виключень варто винести на рівень вище, в app.php.
+                # CR: Загальна рекомендація - ніколи не логувати і перекидати виключення далі в одному блоку catch оскільки це приводе до дублювання одного виключення в лог файлі.
                 // TODO: log
                 throw $exception;
 

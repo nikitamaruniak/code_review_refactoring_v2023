@@ -31,6 +31,8 @@ class TransactionData
     /**
      * @throws ValidationException
      */
+    # CR: Краще назвати цей метод createFromJSON або createFromJSONString заради прозорості імені.
+    # CR: Чому б відповідальність за відкриття на парсинг вхідного файла не віддати окремому сервісу?
     public static function createFromString(string $inputData): self
     {
         $data = json_decode($inputData, true, 2);

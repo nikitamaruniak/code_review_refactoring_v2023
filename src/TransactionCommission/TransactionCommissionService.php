@@ -36,6 +36,7 @@ class TransactionCommissionService
 
     private function getCommissionCoeff(Country $country): float
     {
+        # CR: Low cohesion: Чи не було б краще якби підрахунок комісії відбувався разом з округленням в класі Commision?
         return $country->isEu() ? self::COMMISSION_COEFF_EU : self::COMMISSION_COEFF_NON_EU;
     }
 }

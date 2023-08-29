@@ -39,6 +39,7 @@ class BinListCachedRepository implements BinListRepositoryInterface
                 return $this->get($bin);
             });
         } catch (InvalidArgumentException $exception) {
+            # CR: Fail Fast: InvalidArgumentException схоже на помилку програміста тому нема сенсу його очікувати.
             throw new BinListRepositoryException(sprintf('Cache failed. Reason: \'%s\'', $exception->getMessage()));
         }
 
@@ -55,6 +56,7 @@ class BinListCachedRepository implements BinListRepositoryInterface
 
         $data = @json_decode($rawData, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
+            # CR: Помарка, має бути BinListRepositoryException.
             throw new ExchangeRateRepositoryException(sprintf('Failed decode response data: \'%s\'. Error: \'%s\'', $rawData, json_last_error()));
         }
 
